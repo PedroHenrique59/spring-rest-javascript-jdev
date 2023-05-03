@@ -1,20 +1,25 @@
 package br.com.springboot.controllers;
 
+import br.com.springboot.model.Usuario;
+import br.com.springboot.repository.UsuarioRepository;
+import com.fasterxml.jackson.databind.ser.std.UUIDSerializer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
- *
  * A sample greetings controller to return greeting text
  */
 @RestController
 public class GreetingsController {
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
     /**
-     *
      * @param name the name to greet
      * @return greeting text
      */
@@ -23,4 +28,19 @@ public class GreetingsController {
     public String greetingText(@PathVariable String name) {
         return "Hello " + name + "!";
     }
+
+    @GetMapping(value = "listaTodos")
+    @ResponseBody
+    public ResponseEntity<List<Usuario>> listarTodosUsuarios() {
+        List<Usuario> usuarios = usuarioRepository.findAll();
+        return new ResponseEntity<>(usuarios, HttpStatus.OK);
+    }
+
+    @PostMapping(value = "salvar")
+    @ResponseBody
+    public ResponseEntity<Usuario> salvarUsuario(@RequestBody Usuario usuario) {
+        Usuario user = usuarioRepository.save(usuario);
+        return new ResponseEntity<>(user, HttpStatus.CREATED);
+    }
+
 }
