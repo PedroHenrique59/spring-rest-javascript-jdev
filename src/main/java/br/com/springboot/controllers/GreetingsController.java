@@ -19,16 +19,6 @@ public class GreetingsController {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    /**
-     * @param name the name to greet
-     * @return greeting text
-     */
-    @RequestMapping(value = "/{name}", method = RequestMethod.GET)
-    @ResponseStatus(HttpStatus.OK)
-    public String greetingText(@PathVariable String name) {
-        return "Hello " + name + "!";
-    }
-
     @GetMapping(value = "listaTodos")
     @ResponseBody
     public ResponseEntity<List<Usuario>> listarTodosUsuarios() {
