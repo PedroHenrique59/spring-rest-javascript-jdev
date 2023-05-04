@@ -148,7 +148,7 @@
             $.ajax({
                 method: "DELETE",
                 url: "delete",
-                data: "iduser=" + id,
+                data: "idUsuario=" + id,
                 success: function (response) {
                     $('#' + id).remove();
                     alert(response);
