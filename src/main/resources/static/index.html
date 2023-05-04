@@ -31,6 +31,7 @@
 </form>
 
 <button type="button" class="btn btn-primary" onclick="salvarUsuario()">Salvar</button>
+<button type="button" class="btn btn-secondary" onclick="limpar()">Novo</button>
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"
         integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
@@ -41,11 +42,30 @@
 
 <script type="text/javascript">
     function salvarUsuario() {
+
         var id = $("#id").val();
         var nome = $("#nome").val();
         var idade = $("#idade").val();
-        alert(nome);
+
+        $.ajax({
+            method: "POST",
+            url: "salvar",
+            data: JSON.stringify({id: id, nome: nome, idade: idade}),
+            contentType: "application/json; charset=utf-8",
+            success: function (response) {
+                $("#id").val(response.id);
+                alert("Gravou com sucesso!");
+            }
+        }).fail(function (xhr, status, errorThrown) {
+            alert('Erro ao salvar usuário' + xhr.responseText);
+        });
     }
+
+    function limpar() {
+        document.getElementById("formCadastroUsuario").reset();
+    }
+
+
 </script>
 
 </body>
