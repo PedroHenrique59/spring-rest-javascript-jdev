@@ -58,6 +58,4 @@ public class GreetingsController {
         return new ResponseEntity<>("Usuário excluído", HttpStatus.OK);
     }
 
-
-
 }
